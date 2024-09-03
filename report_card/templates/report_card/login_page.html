@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static%}
+{% csrf_token %}
+<style>
+    .container {
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        background: linear-gradient(135deg, #f1f1f3, #65a3cf);
+        min-height: 100vh;
+    }
+</style>
+<div class="container">
+    <h2>Login</h2>
+    <a href="{% url 'signin_as_student' %}">Sign in as Student</a>
+    <a href="{% url 'signin_as_teacher' %}">Sign in as Teacher</a>
+</div>
+{% endblock %}

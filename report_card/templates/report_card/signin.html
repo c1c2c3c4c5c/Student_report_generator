@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<form id="form"
+    action="{% if user_type == 'student' %}{% url 'signin_as_student' %}{% else %}{% url 'signin_as_teacher' %}{% endif %}"
+    method="POST">
+    {% csrf_token %}
+    <div>
+        {% if user_type == 'student' %}
+        <h3>Signing in as a Student</h3>
+        {% elif user_type == 'teacher' %}
+        <h3>Signing in as a Teacher</h3>
+        {% endif %}
+    </div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    {% if user_type == 'student' %}
+    <input type="hidden" name="user_type" value="student">
+    {% elif user_type == 'teacher' %}
+    <input type="hidden" name="user_type" value="teacher">
+    {% endif %}
+    <div>
+        <input type="submit" value="Sign In">
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% csrf_token %}
+<form id="form"
+    action="{% if user_type == 'student' %}{% url 'register_as_student' %}{% else %}{% url 'register_as_teacher' %}{% endif %}"
+    method="POST" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div>
+        {% if user_type == 'student' %}
+        <h3>Student Registration</h3>
+        {% elif user_type == 'teacher' %}
+        <h3>Teacher Registration</h3>
+        {% endif %}
+    </div>
+    <div>
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name">
+    </div>
+    <div>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name">
+    </div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span id="emailError" style="color: red;"></span>
+    </div>
+    <div>
+        {% if user_type == 'student' %}
+        <label for="roll_number">Roll Number:</label>
+        <input type="text" id="roll_number" name="roll_number" required>
+        {% endif %}
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <span id="passwordError" style="color: red;"></span>
+    </div>
+    {% if user_type == 'student' %}
+    <input type="hidden" name="user_type" value="student">
+    {% elif user_type == 'teacher' %}
+    <input type="hidden" name="user_type" value="teacher">
+    {% endif %}
+    <div>
+        <input type="submit" value="Register">
+    </div>
+</form>
+<script>
+    function validateForm() {
+        var form = document.getElementById("form");
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var text = document.getElementById("text");
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Perform email validation
+        if (email.match(emailPattern)) {
+            form.classList.add("valid");
+            form.classList.remove("invalid");
+            text.innerHTML = "Your email address is valid";
+            text.style.color = "#00ff00";
+        }
+        else if (email === "") {
+            form.classList.remove("valid");
+            form.classList.add("invalid");
+            text.innerHTML = "Please enter an email";
+            text.style.color = "#ff0000";
+            return false; // Stop form submission if email is empty
+        }
+        else {
+            form.classList.remove("valid");
+            form.classList.add("invalid");
+            text.innerHTML = "Please enter a valid email";
+            text.style.color = "#ff0000";
+            return false; // Stop form submission if email is invalid
+        }
+
+        // Perform password validation
+        if (password.length < 8) {
+            form.classList.remove("valid");
+            form.classList.add("invalid");
+            text.innerHTML = "Password must be at least 8 characters long";
+            text.style.color = "#ff0000";
+            return false; // Stop form submission if password is too short
+        }
+
+        // Additional validation logic can be added here
+
+        return true; // Allow form submission if all validations pass
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,161 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report Card</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f1f1f3, #65a3cf);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .report-card-container {
+            background: linear-gradient(135deg, #ffffff, #e3f2fd);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            min-width: 600px;
+            animation: fadeIn 1s ease;
+            min-height: 600px; 
+        }
+        .report-card-container h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 20px;
+            font-display:initial;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-decoration: underline;
+        }
+        .report-card-container h2 {
+            color: #1750ca;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            text-decoration: linear-gradient(135deg, #d16c6c, #abc3d4); ;
+        }
+        .student-info .left-info, .student-info .right-info {
+            color: #1565c0;
+        }
+        .table-container {
+            margin: 0 auto;
+            text-align: center;
+        }
+        .table-container table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table-container table th, .table-container table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .table-container table th {
+            background-color: #e3f2fd;
+            color: #1a237e;
+        }
+        .table-container table td {
+            color: #1565c0;
+        }
+        .btn-generate-report {
+            display: block;
+            width: 200px;
+            margin: 50px auto;
+            padding: 10px 20px;
+            background-color: #1a237e;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-generate-report:hover {
+            background-color: #0d47a1;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-card-container">
+        <h1>Pandit Deendayal University</h1><br>
+        <div class="student-info">
+            <div class="left-info">
+                <p>Name: John Doe</p>
+                <p>Roll Number: 12345</p>
+            </div>
+            <div class="right-info">
+                <p>Semester: 2</p>
+                <p>Passing Month/Year: May 2024</p>
+            </div>
+        </div>
+        <div class="table-container" id="tableContainer" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectMarksTable">
+                    <!-- Marks will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        <button id="generateReportBtn" class="btn-generate-report">Generate Report Card</button><br>
+        <h2> Best Wishes to you!!🎊🎊</h2>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to fetch marks from backend -->
+    <script>
+        // Function to fetch marks from backend and update the table
+        function fetchMarksAndUpdateTable() {
+            // Assuming you have a backend endpoint to fetch marks for the student
+            // Replace the URL with your actual backend endpoint
+            fetch('https://example.com/api/marks')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('subjectMarksTable');
+                    Object.keys(data).forEach(subject => {
+                        const row = `<tr>
+                                        <td>${subject}</td>
+                                        <td>${data[subject]}</td>
+                                    </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                    document.getElementById('tableContainer').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching marks:', error);
+                });
+        }
+
+        // Event listener for Generate Report Card button
+        document.getElementById('generateReportBtn').addEventListener('click', function() {
+            fetchMarksAndUpdateTable();
+        });
+    </script>
+</body>
+</html>

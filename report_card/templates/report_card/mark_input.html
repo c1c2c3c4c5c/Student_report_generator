@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    #form {
+        width: 50%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #form div {
+        margin-bottom: 10px;
+    }
+
+    #form input[type="text"],
+    #form input[type="number"] {
+        width: 200px;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    #form button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+</style>
+<form id="form" method="post">
+    {% csrf_token %}
+    <div>
+        <h3>Mark Input</h3>
+    </div>
+    <div id="manualInput">
+        <div>{{ form.roll_number.label }}: {{ form.roll_number }}</div>
+        <div>{{ form.subject1.label }}: {{ form.subject1 }}</div>
+        <div>{{ form.marks1.label }}: {{ form.marks1 }}</div>
+        <div>{{ form.subject2.label }}: {{ form.subject2 }}</div>
+        <div>{{ form.marks2.label }}: {{ form.marks2 }}</div>
+        <div>{{ form.subject3.label }}: {{ form.subject3 }}</div>
+        <div>{{ form.marks3.label }}: {{ form.marks3 }}</div>
+        <div>{{ form.subject4.label }}: {{ form.subject4 }}</div>
+        <div>{{ form.marks4.label }}: {{ form.marks4 }}</div>
+        <div>{{ form.subject5.label }}: {{ form.subject5 }}</div>
+        <div>{{ form.marks5.label }}: {{ form.marks5 }}</div>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

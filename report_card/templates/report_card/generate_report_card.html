@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Card</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Academic Report Card</h1>
+    <h2>Student Name: {{ student.first_name }} {{ student.last_name }}</h2>
+    <h3>Roll Number: {{ student.roll_number }}</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Rank</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject_mark in student_marks %}
+            <tr>
+                <td>{{ subject_mark.subject.subject_name }}</td>
+                <td>{{ subject_mark.marks }}</td>
+                <td>{{ subject_mark.rank }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Overall Rank: {{ report_card.student_rank }}</h3>
+</body>
+</html>

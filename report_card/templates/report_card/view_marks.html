@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- view_marks.html -->
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Marks</th>
+        <th>Rank</th>
+    </tr>
+    {% for item in student_marks_rank %}
+    <tr>
+        <td>{{ item.student.first_name }} {{item.student.last_name}}</td>
+        <td>
+            {% for mark in item.marks %}
+                {{ mark.subject.subject_name }}: {{ mark.marks }}<br>
+            {% endfor %}
+        </td>
+        <td>{{ item.rank }}</td>
+    </tr>
+    {% endfor %}
+</table>
+    
+{% endblock %}

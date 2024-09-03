@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<form id="form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Upload an Excel file</h3>
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('id_file').addEventListener('change', function() {
+        var fileNameDiv = document.getElementById('file-name');
+        fileNameDiv.innerHTML = '';
+        if (this.files.length > 0) {
+            var fileName = document.createElement('p');
+            fileName.textContent = 'Selected file: ' + this.files[0].name;
+            fileNameDiv.appendChild(fileName);
+        }
+    });
+</script>
+{% endblock %}

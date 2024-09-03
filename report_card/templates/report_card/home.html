@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if not request.user.is_authenticated%}
+<div class="container">
+    <h2>Welcome to the Student Report System</h2>
+    <p>This is a web-based platform designed to facilitate the management of student reports and marks.</p>
+
+    <div class="section">
+        <h3>For Students</h3>
+        <p>To view your marks and report, please register with your roll number. Once registered, you can log in and access your grades and other relevant information.</p>
+        <a href="{% url 'register_as_student' %}" class="btn">Register Account</a>
+        <p>If you are already registered, you can log in to view your marks and report.</p>
+        <a href="{% url 'signin_as_student' %}" class="btn">Login</a>
+    </div>
+
+    <div class="section">
+        <h3>For Teachers</h3>
+        <p>If you are a teacher, you can add student information and input marks for the current semester. To get started, please register with your faculty details.</p>
+        <a href="{% url 'register_as_teacher' %}" class="btn">Register Account</a>
+        <p>If you are already registered, you can log in to input marks for the current semester.</p>
+        <a href="{% url 'signin_as_teacher' %}" class="btn">Login</a>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <h2>Welcome to the Student Report System</h2>
+    <p>This is a web-based platform designed to facilitate the management of student reports and marks.</p>
+    <div class="section">
+        {% if request.user.is_authenticated%} 
+        {% if request.user.teacher %}
+        <h3>For Teachers</h3>
+        <p>You are logged in as a teacher. You can add student information and input marks for the current semester.</p>
+        <a href="{% url 'mark_input' %}" class="btn">Input
+            Marks</a>
+        <a href="{% url 'upload_file' %}" class="btn">Student Data</a>
+        <a href="{% url 'view_marks_all' %}" class="btn">Class Marks</a>
+        {% elif request.user.student %}
+        <h3>For Students</h3>
+        <p>You are logged in as a student. You can view your marks and download your report card.</p>
+        <a href="{% url 'view_marks' %}" class="btn">View Marks</a>
+        <a href="{% url 'view_report_card' %}" class="btn">Download Report</a>
+        {%endif%}
+        <a href="{% url 'logout_view' %}" class="btn">Logout</a>
+        {% endif %}
+</div>
+{% endif %}
+{% endblock %}
